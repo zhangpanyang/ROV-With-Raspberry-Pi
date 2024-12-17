@@ -7,9 +7,9 @@ vars.pi = pigpio.pi()
 if not vars.pi.connected:
     raise Exception("Failed to connect to pigpio")
 
-from motor import Motor
-from laser import readLaserSensor
-from press import readPressureSensor
+from motorTask import Motor
+from laserTask import readLaserSensor
+from pressTask import readPressureSensor
 
 from vars import pi
 
