@@ -7,6 +7,8 @@ vars.pi = pigpio.pi()
 if not vars.pi.connected:
     raise Exception("Failed to connect to pigpio")
 
+from keyTask import ClickType
+from keyTask import KeyHandler
 from motorTask import Motor
 from laserTask import readLaserSensor
 from pressTask import readPressureSensor
