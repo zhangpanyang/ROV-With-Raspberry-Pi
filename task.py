@@ -1,5 +1,6 @@
 import pigpio
 import time
+from datetime import datetime
 
 import vars
 
@@ -12,6 +13,7 @@ from keyTask import KeyHandler
 from motorTask import Motor
 from laserTask import readLaserSensor
 from pressTask import readPressureSensor
+from cameraTask import capture_image
 
 from vars import pi
 
@@ -26,19 +28,30 @@ pi.set_mode(18, pigpio.OUTPUT)
 pi.write(18, 1)
 
 # Control pins
-controlStates = [0, 0, 0, 0]
-controlPins = (4, 17,27,22)
-for pin in controlPins:
-    pi.set_mode(pin, pigpio.INPUT)
-    pi.set_pull_up_down(pin, pigpio.PUD_DOWN)
+# controlStates = [0, 0, 0, 0]
+# controlPins = (4, 17,27,22)
+# for pin in controlPins:
+#     pi.set_mode(pin, pigpio.INPUT)
+#     pi.set_pull_up_down(pin, pigpio.PUD_DOWN)
+keyHandlers = []
+keyHandlers.append(KeyHandler(4))
+keyHandlers.append(KeyHandler(17))
+keyHandlers.append(KeyHandler(27))
+keyHandlers.append(KeyHandler(22))
 
 while True:
-    for i in range(0,4):
-        controlStates[i] = pi.read(controlPins[i])
-    if controlStates[0]:
+    for keyHandler in keyHandlers:
+        keyHandler.handle()
+    print(keyHandlers[0].state)
+    if keyHandlers[0].state:
         motorTest1.setSpeed(0.1)
     else:
         motorTest1.setSpeed(0)
+    if keyHandlers[4].state and keyHandlers[4].clickType == ClickType.double:
+        now = datetime.now()
+        timeDisplayStr = now.strftime("%Y-%m-%d %H:%M:%S")
+        timeFilenameStr = now.strftime("%Y-%m-%d_%H-%M-%S_%f")
+        capture_image("capture/"+timeFilenameStr+".png",timeDisplayStr)
 
     # laserDistance, laserStrength, laserTemp = readLaserSensor()
     # pressureValue, pressureTemp = readPressureSensor()

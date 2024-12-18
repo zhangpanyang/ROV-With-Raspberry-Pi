@@ -1,5 +1,6 @@
 from vars import pi
 from enum import Enum
+import pigpio
 
 class ClickType(Enum):
     single = 0
@@ -19,6 +20,9 @@ class KeyHandler:
         self.stemp = 0
         self.lastDownStemp = 0
         self.lastUpStemp = 0
+
+        pi.set_mode(pin, pigpio.INPUT)
+        pi.set_pull_up_down(pin, pigpio.PUD_DOWN)
         pass
 
     def handle(self):
