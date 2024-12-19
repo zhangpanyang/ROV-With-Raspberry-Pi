@@ -5,8 +5,8 @@ import threading
 from imageTask import add_text_to_bottom
 
 def capture_image_work(url, text):
-    width = 640
-    height = 480
+    width = 1920
+    height = 1080
     subprocess.run([
         "libcamera-still", "-e", "png", "-o", url,
         "-t", "100",

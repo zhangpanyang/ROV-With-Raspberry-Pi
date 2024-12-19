@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 
-def add_text_to_bottom(image_path, text, font_path="arial.ttf", font_size=40, black_bar_height=100):
+def add_text_to_bottom(image_path, text, font_path="arial.ttf", font_size=30, black_bar_height=60):
     """
     给图片底部添加黑色条，并在黑色条内居中显示文本。
 
