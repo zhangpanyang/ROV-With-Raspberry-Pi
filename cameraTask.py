@@ -5,13 +5,22 @@ import threading
 from imageTask import add_text_to_bottom
 
 def capture_image_work(url, text):
-    subprocess.run(["libcamera-still", "-o", url, "-t", "100", "-n"])
+    width = 640
+    height = 480
+    subprocess.run([
+        "libcamera-still", "-e", "png", "-o", url,
+        "-t", "100",
+        "-n",
+        "--width", str(width),
+        "--height", str(height)
+    ])
+    print(url)
     add_text_to_bottom(url, text)
 
 def capture_image(url, text):
     # 创建一个线程来运行拍照命令
-    capture_thread = threading.Thread(target=capture_image_work)
-    capture_thread.start(url, text)
+    capture_thread = threading.Thread(target=capture_image_work, args=(url, text))
+    capture_thread.start()
 
 # import picamera
 # # 初始化相机

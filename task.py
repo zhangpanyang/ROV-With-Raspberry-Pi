@@ -36,18 +36,21 @@ pi.write(18, 1)
 keyHandlers = []
 keyHandlers.append(KeyHandler(4))
 keyHandlers.append(KeyHandler(17))
-keyHandlers.append(KeyHandler(27))
 keyHandlers.append(KeyHandler(22))
+keyHandlers.append(KeyHandler(27))
 
 while True:
     for keyHandler in keyHandlers:
         keyHandler.handle()
-    print(keyHandlers[0].state)
+        # print(keyHandler.pin, keyHandler.state)
     if keyHandlers[0].state:
-        motorTest1.setSpeed(0.1)
+        motorTest1.setSpeed(0.5)
+    elif keyHandlers[1].state:
+        motorTest1.setSpeed(-0.5)
     else:
         motorTest1.setSpeed(0)
-    if keyHandlers[4].state and keyHandlers[4].clickType == ClickType.double:
+    if keyHandlers[3].newDown:
+        print('newdown')
         now = datetime.now()
         timeDisplayStr = now.strftime("%Y-%m-%d %H:%M:%S")
         timeFilenameStr = now.strftime("%Y-%m-%d_%H-%M-%S_%f")

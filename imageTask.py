@@ -44,4 +44,3 @@ def add_text_to_bottom(image_path, text, font_path="arial.ttf", font_size=40, bl
 
     # 保存处理后的图片，覆盖原来的文件
     new_img.save(image_path)
-    new_img.show()

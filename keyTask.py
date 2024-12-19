@@ -31,6 +31,7 @@ class KeyHandler:
 
         prevState = self.state
         self.state = pi.read(self.pin)
+        # print(self.pin, pi.read(self.pin))
 
         if not prevState and self.state:
             if self.stemp - self.lastUpStemp < 50:
