@@ -39,9 +39,14 @@ keyHandlers.append(KeyHandler(17))
 keyHandlers.append(KeyHandler(22))
 keyHandlers.append(KeyHandler(27))
 
+laserDistance, laserStrength, laserTemp, pressureValue, pressureTemp = 0, 0, 0, 0, 0
+
 while True:
-    laserDistance, laserStrength, laserTemp = readLaserSensor()
-    pressureValue, pressureTemp = readPressureSensor()
+    try:
+        laserDistance, laserStrength, laserTemp = readLaserSensor()
+        pressureValue, pressureTemp = readPressureSensor()
+    except:
+        pass
 
     for keyHandler in keyHandlers:
         keyHandler.handle()
@@ -58,9 +63,8 @@ while True:
         timeDisplayStr = now.strftime("%Y-%m-%d %H:%M:%S")
         timeFilenameStr = now.strftime("%Y-%m-%d_%H-%M-%S_%f")
         displayStr = timeDisplayStr + f', Distance: {laserDistance:.3f}m, Pressure: {pressureValue:.3f}, Temperature: {pressureTemp:.3f}C'
+        print(displayStr)
         capture_image("capture/"+timeFilenameStr+".png", displayStr)
-
-    # print(f'Distance: {laserDistance:.3f}m, pressure: {pressureValue:.3f}, temperature: {pressureTemp:.3f}C')
 
     time.sleep(0.01)
     # for i in range(-10, 10):
