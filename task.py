@@ -11,6 +11,7 @@ if not vars.pi.connected:
 from keyTask import ClickType
 from keyTask import KeyHandler
 from motorTask import Motor
+from servoTask import Servo
 from laserTask import readLaserSensor
 from pressTask import readPressureSensor
 from cameraTask import capture_image
@@ -20,6 +21,7 @@ from vars import pi
 motorTest3 = Motor(26, 21)
 motorTest2 = Motor(13, 19)
 motorTest1 = Motor(5, 6)
+servoBuoyant = Servo(24)
 
 # 3.3V
 pi.set_mode(12, pigpio.OUTPUT)
@@ -51,12 +53,32 @@ while True:
     for keyHandler in keyHandlers:
         keyHandler.handle()
         # print(keyHandler.pin, keyHandler.state)
-    if keyHandlers[0].state:
-        motorTest1.setSpeed(0.5)
-    elif keyHandlers[1].state:
-        motorTest1.setSpeed(-0.5)
+    
+    # print(keyHandlers[0].state, keyHandlers[1].state, keyHandlers[2].state, keyHandlers[3].state)
+    buoyantSpeed = 0
+    thrustLeft = 0
+    thrustRight = 0
+    if keyHandlers[2].state:
+        if keyHandlers[0].state:
+            buoyantSpeed = 1
+        elif keyHandlers[1].state:
+            buoyantSpeed = -1
+        else:
+            thrustLeft = 0.1
+            thrustRight = 0.1
     else:
-        motorTest1.setSpeed(0)
+        if keyHandlers[0].state:
+            thrustLeft = -0.1
+            thrustRight = 0.1
+        elif keyHandlers[1].state:
+            thrustLeft = 0.1
+            thrustRight = -0.1
+        else:
+            pass
+    
+    servoBuoyant.setSpeed(buoyantSpeed)
+    motorTest1.setSpeed(thrustLeft)
+    motorTest3.setSpeed(thrustRight)
     if keyHandlers[3].newDown:
         print('newdown')
         now = datetime.now()

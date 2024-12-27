@@ -1,9 +1,6 @@
 import pigpio
 import time
-
-pi = pigpio.pi()
-if not pi.connected:
-    raise Exception("Failed to connect to pigpio")
+from vars import pi
 
 class Servo:
     def __init__(self, pin):
@@ -18,13 +15,13 @@ class Servo:
         
         pi.set_PWM_dutycycle(self.pin, round(255*(0.075+0.025*speed)))
 
-servoTest = Servo(2)
+# servoTest = Servo(24)
 
-while True:
+# while True:
     # for i in range(-100, 100):
     #     servoTest.setSpeed(i/100)
     #     time.sleep(0.1)
     # for i in range(100, -100, -1):
     #     servoTest.setSpeed(i/100)
     #     time.sleep(0.1)
-    servoTest.setSpeed(1)
+    # servoTest.setSpeed(1)
