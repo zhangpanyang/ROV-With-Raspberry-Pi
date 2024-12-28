@@ -77,7 +77,7 @@ while True:
             pass
     
     servoBuoyant.setSpeed(buoyantSpeed)
-    motorTest1.setSpeed(thrustLeft)
+    motorTest1.setSpeed(-thrustLeft)
     motorTest3.setSpeed(thrustRight)
     if keyHandlers[3].newDown:
         print('newdown')
