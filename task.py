@@ -18,9 +18,11 @@ from cameraTask import capture_image
 
 from vars import pi
 
-motorTest3 = Motor(26, 21)
-motorTest2 = Motor(13, 19)
-motorTest1 = Motor(5, 6)
+# motorTest3 = Motor(26, 21)
+# motorTest2 = Motor(13, 19)
+# motorTest1 = Motor(5, 6)
+motorL = Motor(5, 6)
+motorR = Motor(26, 21)
 servoBuoyant = Servo(24)
 
 # 3.3V
@@ -77,8 +79,8 @@ while True:
             pass
     
     servoBuoyant.setSpeed(buoyantSpeed)
-    motorTest1.setSpeed(-thrustLeft)
-    motorTest3.setSpeed(thrustRight)
+    motorL.setSpeed(-thrustLeft)
+    motorR.setSpeed(thrustRight)
     if keyHandlers[3].newDown:
         print('newdown')
         now = datetime.now()
@@ -86,7 +88,10 @@ while True:
         timeFilenameStr = now.strftime("%Y-%m-%d_%H-%M-%S_%f")
         displayStr = timeDisplayStr + f', Distance: {laserDistance:.3f}m, Pressure: {pressureValue:.3f}, Temperature: {pressureTemp:.3f}C'
         print(displayStr)
-        capture_image("capture/"+timeFilenameStr+".png", displayStr)
+        try:
+            capture_image("capture/"+timeFilenameStr+".png", displayStr)
+        except:
+            print('fail to capture')
 
     time.sleep(0.01)
     # for i in range(-10, 10):

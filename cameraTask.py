@@ -15,7 +15,10 @@ def capture_image_work(url, text):
         "--height", str(height)
     ])
     print(url)
-    add_text_to_bottom(url, text)
+    try:
+        add_text_to_bottom(url, text)
+    except:
+        pass
 
 def capture_image(url, text):
     # 创建一个线程来运行拍照命令
