@@ -9,8 +9,9 @@ def capture_image_work(url, text):
     height = 1080
     subprocess.run([
         "libcamera-still", "-e", "png", "-o", url,
-        "-t", "100",
-        "-n",
+        "--preview", "none",
+        "--gain", "0",
+        "--shutter", "4000",
         "--width", str(width),
         "--height", str(height)
     ])
