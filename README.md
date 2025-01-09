@@ -8,8 +8,8 @@
 
 #### Functions Required To Be Enabled
 
-- UART
-- serial0
+- UART (serial0)
+- I2C
 - camera
 
 #### Python Libraries Required
